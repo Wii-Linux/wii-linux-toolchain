@@ -33,7 +33,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get update && \
 
 COPY --from=build /root/x-tools/powerpc-unknown-linux-gnu/ /usr/local/crosstool
 COPY --from=build /build/hbc/channel/wiiload/wiiload /usr/local/crosstool/bin/wiiload
-COPY --from=build /build/hbc/channel/wiiload/bootmii /usr/local/crosstool/bin/bootmii
+COPY --from=build /build/bootmii-utils/client/bootmii /usr/local/crosstool/bin/bootmii
 
 ENV PATH=/usr/local/crosstool/bin:$PATH
 ENV CROSS_COMPILE=powerpc-unknown-linux-gnu-
