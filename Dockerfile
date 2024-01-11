@@ -22,8 +22,8 @@ RUN wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.26.0.tar.x
     
 ADD ct-ng.config .config
 RUN /usr/local/ct/bin/ct-ng build
-RUN git clone https://github.com/fail0verflow/hbc.git /build/hbc && cd /build/hbc/channel/wiiload && make
-
+RUN cd /build/ && git clone https://github.com/fail0verflow/hbc.git /build/hbc && cd /build/hbc/channel/wiiload && make
+RUN git clone https://github.com/fail0verflow/bootmii-utils.git /build/bootmii-utils && cd /build/bootmii-utils/client && make 
 ## Final build image
 FROM  ubuntu:${VARIANT}
 
@@ -33,6 +33,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get update && \
 
 COPY --from=build /root/x-tools/powerpc-unknown-linux-gnu/ /usr/local/crosstool
 COPY --from=build /build/hbc/channel/wiiload/wiiload /usr/local/crosstool/bin/wiiload
+COPY --from=build /build/hbc/channel/wiiload/bootmii /usr/local/crosstool/bin/bootmii
 
 ENV PATH=/usr/local/crosstool/bin:$PATH
 ENV CROSS_COMPILE=powerpc-unknown-linux-gnu-
