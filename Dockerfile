@@ -29,7 +29,8 @@ FROM  ubuntu:${VARIANT}
 
 RUN DEBIAN_FRONTEND="noninteractive" apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt-get -y install \
-            patch ninja-build make bc ccache gcc libncurses-dev
+            patch ninja-build make bc ccache gcc libncurses-dev \
+            kmod bison flex libssl-dev openssl
 
 COPY --from=build /root/x-tools/powerpc-unknown-linux-gnu/ /usr/local/crosstool
 COPY --from=build /build/hbc/channel/wiiload/wiiload /usr/local/crosstool/bin/wiiload
